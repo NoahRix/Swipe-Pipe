@@ -15,13 +15,6 @@ namespace Swipe_Pipe
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : Activity
     {
-        //public string appid = "ca-app-pub-3542202851056774~5261967133";
-        //public string inter_ad_id = "ca-app-pub-3542202851056774/4601591773";
-        //string int_ad_test = "ca-app-pub-3940256099942544/1033173712";
-        //public string banner_1_id = "ca-app-pub-3542202851056774/1508261247";
-        //public InterstitialAd iad;
-        //public AdRequest adRequest1;
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -33,9 +26,9 @@ namespace Swipe_Pipe
 
             //Initiate ad
             string appid = "ca-app-pub-3542202851056774~5261967133";
-            string inter_ad_id = "ca-app-pub-3542202851056774/4601591773";
+            string inter_ad_id = "ca-app-pub-xxxxxxxxxxxxxxxxxxxxxxxxxxx";
             string int_ad_test = "ca-app-pub-3940256099942544/1033173712";
-            string banner_1_id = "ca-app-pub-3542202851056774/7427366989";
+            string banner_1_id = "ca-app-pub-xxxxxxxxxxxxxxxxxxxxxxxxxxx";
             AdView adView1 = FindViewById<AdView>(Resource.Id.adView1);
             MobileAds.Initialize(this, appid);
             AdRequest adRequest1 = new AdRequest.Builder().Build();
