@@ -1,99 +1,91 @@
-﻿using System;
-using System.Collections.Generic;
 using CocosSharp;
-using Android.Content;
 
 namespace Swipe_Pipe
 {
-    public class Pipes : CCLayerColor
+    public class Pipes : CCNode
     {
-        GameLayer layer;
+        CCSizeI size = new CCSizeI();
         CCSprite pipe_1 = new CCSprite("pipe_1.png");
         CCSprite pipe_2 = new CCSprite("pipe_2.png");
         CCSprite ground = new CCSprite("ground.png");
         float pipe_gap;
         float pos_x;
         float pos_y;
-        public Pipes() : base(CCColor4B.Transparent)
+        public Pipes()
         {
         }
-        public Pipes(GameLayer _layer, Context _context) : base(CCColor4B.Transparent)
+        public Pipes(CCSizeI size)        
         {
-            layer = _layer;
-            pos_y = layer.height / 2;
+            this.size = size;
+            pos_y = size.Height / 2;
             pipe_1.AnchorPoint = new CCPoint(0.5f, 1);
             pipe_2.AnchorPoint = new CCPoint(0.5f, 0);
-            pipe_1.Scale = layer.width / pipe_1.ContentSize.Width * 0.15f;
-            pipe_2.Scale = layer.width / pipe_2.ContentSize.Width * 0.15f;
+            pipe_1.Scale = size.Width / pipe_1.ContentSize.Width * 0.15f;
+            pipe_2.Scale = size.Width / pipe_2.ContentSize.Width * 0.15f;
             ground.AnchorPoint = new CCPoint(0, 0);
-            ground.Scale = layer.width / ground.ContentSize.Width;
-            ground.Position = new CCPoint(0, -(ground.ScaledContentSize.Height / 2));
+            ground.Scale = size.Width / ground.ContentSize.Width;
+            ground.Position = new CCPoint (0, -(ground.ScaledContentSize.Height / 2));
             pipe_gap = pipe_1.ScaledContentSize.Width * 1.5f;
-            draw_children();
+            Draw();
+            Add();
         }
-        public void add_children()
+        public void Add()
         {
-            layer.AddChild(pipe_1);
-            layer.AddChild(pipe_2);
-            layer.AddChild(ground);
+            AddChild(pipe_1);
+            AddChild(pipe_2);
+            AddChild(ground);
         }
-        public void remove_children()
-        {
-            layer.RemoveChild(pipe_1);
-            layer.RemoveChild(pipe_2);
-            layer.RemoveChild(ground);
-        }
-        public void set_position_x(float _pos_x)
-        {
-            pos_x = _pos_x;
-        }
-        public void set_position_y(float _pos_y)
-        {
-            pos_y = _pos_y;
-        }
-        public void draw_children()
+        public void Draw()
         {
             pipe_1.Position = new CCPoint(pos_x, pos_y);
             pipe_2.Position = new CCPoint(pos_x, pos_y + pipe_gap);
         }
-        public float get_width()
+        public void SetPositionX(float _pos_x)
+        {
+            pos_x = _pos_x;
+        }
+        public void SetPositionY(float _pos_y)
+        {
+            pos_y = _pos_y;
+        }
+        public float GetWidth()
         {
             return pipe_1.BoundingBox.Size.Width;
         }
-        public float get_ground_image_width()
+        public float GetGroundImageWidth()
         {
             return ground.BoundingBox.Size.Width;
         }
-        public bool at_max()
+        public bool AtMax()
         {
-            return (pipe_1.BoundingBoxTransformedToParent.MaxY >= layer.height);
+            return (pipe_1.BoundingBoxTransformedToParent.MaxY >= size.Height);
         }
-        public bool at_min()
+        public bool AtMin()
         {
-            return (pipe_2.BoundingBoxTransformedToParent.MinY <= get_top_bounds_of_ground());
+            return (pipe_2.BoundingBoxTransformedToParent.MinY <= GetTopBoundsOfGround());
         }
-        public float get_top_bounds_of_ground()
+        public float GetTopBoundsOfGround()
         {
             return ground.PositionY + ground.ScaledContentSize.Height;
         }
-        public float get_pipe_gap()
+        public float GetPipeGap()
         {
             return pipe_gap;
         }
-        public float get_max()
+        public float GetMax()
         {
-            return layer.height - 1;
+            return size.Height - 1;
         }
         public float get_min()
         {
-            return get_top_bounds_of_ground() + 1 - pipe_gap;
+            return GetTopBoundsOfGround() + 1 - pipe_gap;
         }
-        public bool is_collide(CCSprite obj)
+        public bool IsCollide(CCSprite obj)
         {
             bool cwp1 = (pipe_1.BoundingBoxTransformedToParent.IntersectsRect(obj.BoundingBoxTransformedToParent));
             bool cwp2 = (pipe_2.BoundingBoxTransformedToParent.IntersectsRect(obj.BoundingBoxTransformedToParent));
             return (cwp1 || cwp2);
         }
-
+      
     }
 }
