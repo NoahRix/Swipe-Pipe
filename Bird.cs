@@ -1,32 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
 using CocosSharp;
 
 namespace Swipe_Pipe
 {
-    class Bird : CCLayerColor
+    class Bird : CCNode
     {
         float speed = 0;
-        GameLayer layer;
         CCSprite bird = new CCSprite("flappy1.jpg");
         CCSpriteFrame frame1 = new CCSpriteFrame(new CCTexture2D("flappy1"), new CCRect(0, 0, 395, 279));
         CCSpriteFrame frame2 = new CCSpriteFrame(new CCTexture2D("flappy2"), new CCRect(0, 0, 395, 279));
-        public Bird() : base(CCColor4B.Transparent)
+        public Bird()
         {
         }
-        public Bird(GameLayer _layer) : base(CCColor4B.Transparent)
+        public Bird(CCSize size)
         {
-            layer = _layer;
             bird.AnchorPoint = new CCPoint(0, 0);
-            bird.Scale = layer.width / bird.ContentSize.Width * 0.15f;
+            bird.Scale = size.Width / bird.ContentSize.Width * 0.15f;
+            Add();
         }
-        public void add_children()
+        public void Add()
         {
-            layer.AddChild(bird);
-        }
-        public void remove_children()
-        {
-            layer.RemoveChild(bird);
+            AddChild(bird);
         }
         public void set_position(CCPoint pos)
         {
@@ -46,7 +39,7 @@ namespace Swipe_Pipe
         }
         public void set_frame(int i)
         {
-            switch (i)
+            switch(i)
             {
                 case 1:
                     bird.SpriteFrame = frame1;
